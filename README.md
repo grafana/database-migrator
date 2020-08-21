@@ -24,6 +24,17 @@ mysql grafana < grafana.sql
 - do not change the Grafana version (e.g., 7.1.3) or flavor (e.g., OSS, Enterprise) between the export and import of the database
 - Postgres support may require some additional processing of the SQL file: see https://grafana.com/blog/2020/01/13/how-to-migrate-your-configuration-database/
 
+## You must fix import errors
+SQLite uses case-sensitive indexes. But MySQL unique indexes are not case-sensitive for columns using a ci collation (the default). Thus you may hit some errors like this while importing the SQL dump into MySQL:
+
+```
+ERROR 1062 (23000) at line 4989: Duplicate entry 'SomeKeyName' for key 'UQE_tag_key_value'
+```
+
+This means that two values conflicted because they were different to SQLite (due to its case-sensitivity), but they appear to be the same to MySQL.
+
+It is important that you fix these errors, or the import will be incomplete. I.e., you will need to maually edit the SQL dump file to identify the lines that include conflicting key names (i.e., keys that are the same but have different case), and either delete or edit one of those lines to make the keys unique, the re-run the step to import the SQL file into MySQL. You may have to do this multiple times, until the import runs without errors.
+
 ## Test procedure using Docker container
 Caution: this procedure is for testing only, because the DB will be lost when the Docker container is stopped.
 
