@@ -24,6 +24,9 @@ mysql grafana < grafana.sql
 - do not change the Grafana version (e.g., 7.1.3) or flavor (e.g., OSS, Enterprise) between the export and import of the database
 - Postgres support may require some additional processing of the SQL file: see https://grafana.com/blog/2020/01/13/how-to-migrate-your-configuration-database/
 
+## Character set: may need to be `utf8mb4`
+In order to avoid errors like "Incorrect string value" during import of the data into MySQL, you may find it is necessary to change the MySQL charset to `utf8mb4`. One way to do this is to add `character-set-server=utf8mb4` in your my.cnf.
+
 ## You must fix import errors
 SQLite uses case-sensitive indexes. But MySQL unique indexes are not case-sensitive for columns using a ci collation (the default). Thus you may hit some errors like this while importing the SQL dump into MySQL:
 
