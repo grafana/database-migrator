@@ -6,4 +6,4 @@ for t in $TABLES; do
 done
 for t in $TABLES; do
     echo -e ".mode insert $t\nselect * from $t;"  
-done | sqlite3 $DB | sed -e 's/\\[rnut]/\\&/g'
+done | sqlite3 $DB | sed -e 's/\\[rnut"]/\\&/g'
