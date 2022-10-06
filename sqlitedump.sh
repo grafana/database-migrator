@@ -5,5 +5,6 @@ for t in $TABLES; do
     echo "TRUNCATE TABLE $t;"
 done
 for t in $TABLES; do
+    echo -e ".headers on"
     echo -e ".mode insert $t\nselect * from $t;"  
 done | sqlite3 $DB | sed -e 's/\\[rnut"]/\\&/g'
