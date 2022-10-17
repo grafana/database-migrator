@@ -1,12 +1,6 @@
 BEGIN {
     # Do not add new lines on print
     ORS = ""
-
-    # Lowercase mySQL keywords and turn them into a dictionary
-    split(tolower(reserved), ks, ", ")
-    for(i in ks) {
-        keywords[ks[i]] = 1
-    }
 }
 
 /^INSERT/ {
@@ -30,20 +24,10 @@ BEGIN {
     # print INSERT...
     print prefix
 
+    sep = ""
     for(i in columns) {
-        col = columns[i]
-        if(keywords[col] == 1) {
-            # column is a mySQL keyword, add backticks
-            col = "`" col "`"
-        }
-        print col
-
-        # Separate with commas; convert i into a number (string
-        # otherwise)
-        c = 0 + i
-        if(c > 0 && c < length(columns)) {
-            print ","
-        }
+        print sep "`" columns[i] "`"
+        sep = ","
     }
 
     # print VALUES...
