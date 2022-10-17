@@ -38,8 +38,10 @@ BEGIN {
         }
         print col
 
-        # Separate with commas
-        if(i > 0 && i < length(columns)) {
+        # Separate with commas; convert i into a number (string
+        # otherwise)
+        c = 0 + i
+        if(c > 0 && c < length(columns)) {
             print ","
         }
     }
