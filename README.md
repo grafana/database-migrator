@@ -60,14 +60,3 @@ Restoring the database inside the container with docker exec.
 ```
 docker exec -i mytestsql mysql grafana -ugrafana -pgrafana < grafana.sql
 ```
-
-## reserved words
-
-We need to parse for mysql reserved words in the column names of the dump to add backticks to say that they are not a command for the insert command to mysql.
-
-This is a simple program that takes in a copy from the page https://dev.mysql.com/doc/refman/8.0/en/keywords.html and insert it into the `mysql_reserved_words.txt` and splits out the reserved words in a format we can paste into the sqldump script file.
-
-```bash
-$ ./reserved_words_parse.go
-MYSQL_RESERVED_WORDS=ACCESSIBLE, ACCOUNT, ACTION, ACTIVE, ADD, ...
-```
