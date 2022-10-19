@@ -12,6 +12,7 @@
     split(middle, columns, ",")
 
     sep = ""
+    cols = ""
     for(i in columns) {
         cols = cols sep "`" columns[i] "`"
         sep = ","
