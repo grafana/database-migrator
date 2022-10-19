@@ -1,3 +1,4 @@
+# this script is used to backtick tables and columns for each insert statement
 /^INSERT/ {
     # Match columns definition
     match($0, /^INSERT INTO (.+)\(([^\)]+)\) VALUES\((.+)\);$/, matches)
