@@ -5,8 +5,10 @@ The Grafana help docs discuss what DB options are supported by Grafana: https://
 
 Use the script like this to create the MySQL dump file (which will be used later as a script to insert data into the MySQL database):
 
-```
-sqlitedump.sh grafana.db > grafana.sql
+```bash
+cp sqlitedump.sh <PATH_TO_GRAFANA_DB>
+cp escape.awk <PATH_TO_GRAFANA_DB>
+sqlitedump.sh <PATH_TO_GRAFANA_DB>/grafana.db > grafana.sql
 ```
 
 Before importing this into your new MySQL DB:
@@ -16,9 +18,14 @@ Before importing this into your new MySQL DB:
 
 Then you can import the SQL dump file to populate the content (be warned it truncates the tables first, so any existing data in mysql will be lost). Something like this:
 
-```
+```bash
 mysql grafana < grafana.sql
 ```
+## notes
+If you are using MacOSX you might need to install `gawk` to be used for the `escape.awk` script. MacOSX `awk` (`brew install awk`) is not the GNU implementation, download `gawk` with `brew install gawk` and then alias it for `awk` using `alias awk=gawk`.
+
+troubleshoot
+- (optional) you might have to create a grafana database in your MySQL DB for migrations to work
 
 ## Caveats
 - do not change the Grafana version (e.g., 7.1.3) or flavor (e.g., OSS, Enterprise) between the export and import of the database
