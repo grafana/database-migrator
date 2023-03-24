@@ -31,6 +31,7 @@ troubleshoot
 - do not change the Grafana version (e.g., 7.1.3) or flavor (e.g., OSS, Enterprise) between the export and import of the database
 - Postgres support may require some additional processing of the SQL file: see https://grafana.com/blog/2020/01/13/how-to-migrate-your-configuration-database/
 - In order for your datasource passwords to function after migration to your new database, make sure that the new Grafana environment is using the same `secret_key` as your old environment (in the grafana.ini: https://grafana.com/docs/grafana/latest/administration/configuration/#secret_key)
+- This script isn't compatible with older versions of sqlite. It doesn't work with sqlite 3.7.17 for example (which is the latest available on RHEL 7.9). It has been tested with sqlite 3.31.1+ 
 
 ## Character set: may need to be `utf8mb4`
 In order to avoid errors like "Incorrect string value" during import of the data into MySQL, you may find it is necessary to change the MySQL charset to `utf8mb4`. One way to do this is to add `character-set-server=utf8mb4` in your my.cnf.
